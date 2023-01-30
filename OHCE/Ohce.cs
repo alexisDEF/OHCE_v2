@@ -1,4 +1,5 @@
 ﻿using OHCE.Langues;
+using System;
 using System.Text;
 
 namespace OHCE
@@ -30,12 +31,16 @@ namespace OHCE
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.Append(this.DireBonjour());
+            stringBuilder.Append("Bonjour");
+            stringBuilder.Append(_langue.Bonjour);
 
-            stringBuilder.Append(" " + this.Miroir(mot) + " ");
-
-            stringBuilder.Append(this.DireAuRevoir());
-
+            var miroir = new string(mot.Reverse().ToArray());
+            stringBuilder.Append(miroir);
+            if (miroir == mot)
+            {
+                stringBuilder.Append(_langue.BienDit);
+            }
+            stringBuilder.Append("Au revoir");
             return stringBuilder.ToString();
         }
 
