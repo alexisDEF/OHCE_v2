@@ -18,27 +18,6 @@ namespace OHCE.Test
             Assert.Contains("laval", resultat);
         }
 
-        public static IEnumerable<object[]> CasTestBonjour => new []
-        {
-            new object[]
-            {
-                new LangueAnglaise(), 
-                MomentDeLaJournée.Indéterminé, 
-                Expressions.Anglais.Salutation
-            },
-            new object[]
-            {
-                new LangueAnglaise(),
-                MomentDeLaJournée.Matin,
-                Expressions.Anglais.GoodMorning
-            },
-            new object[]
-            {
-                new LangueFrançaise(), 
-                MomentDeLaJournée.Indéterminé, 
-                Expressions.Français.Salutation
-            },
-        };
 
         [Theory]
         [MemberData(nameof(CasTestBonjour))]
@@ -64,7 +43,7 @@ namespace OHCE.Test
             //QUAND on saisit une chaîne
             var resultat = new Ohce(new LangueStub()).Traitement("test de chaine");
 
-            //ALORS « Bonjour » est envoyé avant toute réponse
+            //ALORS « Au revoir » est envoyé avant toute réponse
             Assert.EndsWith("Au revoir", resultat);
         }
 
@@ -125,9 +104,9 @@ namespace OHCE.Test
         public void TestAuRevoirLangue(ILangue langue)
         {
             //QUAND on saisit une chaîne
-            var resultat = new Ohce(new LangueStub()).Traitement("test de chaine");
+            var resultat = new Ohce(langue).Traitement("test de chaine");
 
-            //ALORS « Bonjour » est envoyé avant toute réponse
+            //ALORS « Au revoir » est envoyé avant toute réponse
             Assert.EndsWith(langue.AuRevoir, resultat);
         }
     }
