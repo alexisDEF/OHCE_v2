@@ -9,6 +9,8 @@ namespace OHCE.Test.utilities
 {
     public class LangueStub : ILangue
     {
-        public string BienDit => new LangueFrançais().BienDit;
+        private ILangue langue => new LangueFrançais();
+        public string BienDit => langue.BienDit;
+        public string Bonjour => langue.Bonjour;
     }
 }

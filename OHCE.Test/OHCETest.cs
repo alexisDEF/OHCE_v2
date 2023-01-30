@@ -59,7 +59,7 @@ namespace OHCE.Test
 
         [Theory]
         [MemberData(nameof(CasTestAuRevoir))]
-        public void TestAuRevoir(ILangue langue, string acquittance)
+        public void TestAuRevoir()
         {
             //QUAND on saisit une chaîne
             var resultat = new Ohce(new LangueStub()).Traitement("test de chaine");
@@ -76,16 +76,19 @@ namespace OHCE.Test
 
         [Theory(DisplayName = "QUAND on envoie un palindrome ALORS on obtient celui-ci ET 'Bien dit !' est ajouté")]
         [ClassData(typeof(PalindromeClassData))]
-        public void TestPalindromeLangue()
+        public void TestPalindromeLangue(ILangue langue)
         {
 
-            const string palindrome = "bob";
-
             //QUAND on envoie un mot
-            var resultat = new Ohce(new LangueStub()).Traitement(palindrome);
-
+            var resultat = new Ohce(langue).Traitement(palindrome);
             //ALORS on obtient celui-ci
             Assert.Contains(palindrome, resultat);
+            var indexOfPalindrome = resultat.IndexOf(palindrome, StringComparison.Ordinal);
+            var endOfPalindrome = indexOfPalindrome + palindrome.Length;
+            resultat = resultat[endOfPalindrome..];
+
+            //ET 'Bien dit !' est ajouté
+            Assert.Contains(langue.BienDit, resultat);
         }
 
         [Theory]
@@ -103,6 +106,18 @@ namespace OHCE.Test
             
             // ALORS 'Bien dit' en <langue> n'est pas renvoyé
             Assert.DoesNotContain(bienDit, résultat);
+        }
+
+        [Theory(DisplayName = "ETANT DONNE un utilisateur parlant une langue QUAND on saisit une chaîne ALORS <bonjour> de cette langue est envoyé avant tout")]
+        [ClassData(typeof(BonjourClassData))]
+        public void TestBonjourLangue(ILangue langue)
+        {
+
+            //QUAND on saisit une chaîne
+            var resultat = new Ohce(langue).Traitement("test de chaine");
+
+            //ALORS <bonjour> de cette langue est envoyé avant tout
+            Assert.StartsWith(langue.Bonjour, resultat);
         }
     }
 }

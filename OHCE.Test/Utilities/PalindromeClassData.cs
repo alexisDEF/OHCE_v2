@@ -7,8 +7,8 @@ namespace OHCE.Test.utilities
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            yield return new object[] { new LangueFrançaise(), "laval", new LangueFrançaise().BienDit };
-            yield return new object[] { new LangueAnglaise(), "radar", new LangueAnglaise().BienDit };
+            yield return new object[] { new LangueFrançaise(), "laval" };
+            yield return new object[] { new LangueAnglaise(), "radar" };
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
