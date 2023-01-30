@@ -40,7 +40,7 @@ namespace OHCE
             {
                 stringBuilder.Append(_langue.BienDit);
             }
-            stringBuilder.Append(_langue.AuRevoir);
+            stringBuilder.Append(_langue.AuRevoir + _periode);
             return stringBuilder.ToString();
         }
 

@@ -125,7 +125,7 @@ namespace OHCE.Test
             var resultat = new OHCEBuilder().withLangue(langue).withPeriode(periode).build().Traitement("test de chaine");
 
             //ALORS <au revoir> de cette langue à cette période est envoyé avant tout
-            Assert.EndsWith(langue.Bonjour + periode, resultat);
+            Assert.EndsWith(langue.AuRevoir + periode, resultat);
         }
     }
 }
