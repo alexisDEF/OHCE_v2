@@ -28,7 +28,7 @@ namespace OHCE
         }*/
 
         public string Traitement(string mot)
-        {
+        {   
             var stringBuilder = new StringBuilder();
 
             stringBuilder.Append(_langue.Bonjour);
