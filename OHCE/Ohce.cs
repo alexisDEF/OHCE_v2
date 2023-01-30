@@ -10,7 +10,7 @@ namespace OHCE
         //public string _periode;
         //private readonly MomentDeLaJournée _momentDeLaJournée;
 
-        public Ohce(ILangue langue, string periode)
+        public Ohce(ILangue langue)
         {
             _langue = langue;
             //_periode = periode;
