@@ -7,13 +7,13 @@ namespace OHCE
     public class Ohce
     {
         private readonly ILangue _langue;
-        //public string _periode;
+        public string _periode;
         //private readonly MomentDeLaJournée _momentDeLaJournée;
 
-        public Ohce(ILangue langue)
+        public Ohce(ILangue langue, IPeriode periode)
         {
             _langue = langue;
-            //_periode = periode;
+            _periode = periode;
             //_momentDeLaJournée = momentDeLaJournée;
         }
 
@@ -31,8 +31,8 @@ namespace OHCE
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.Append("Bonjour");
             stringBuilder.Append(_langue.Bonjour);
+            stringBuilder.Append(_periode);
 
             var miroir = new string(mot.Reverse().ToArray());
             stringBuilder.Append(miroir);
@@ -40,7 +40,7 @@ namespace OHCE
             {
                 stringBuilder.Append(_langue.BienDit);
             }
-            stringBuilder.Append("Au revoir");
+            stringBuilder.Append(_langue.AuRevoir);
             return stringBuilder.ToString();
         }
 
