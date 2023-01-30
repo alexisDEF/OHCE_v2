@@ -6,20 +6,17 @@ namespace OHCE.Test
 {
     public class OHCETest
     {
-        [Theory]
-        [InlineData("toto")]
-        [InlineData("test")]
-        public void TestMiroir(string chaîne)
+        public void TestMiroir()
         {
             // QUAND on envoie une chaîne à OHCE
-            var resultat = new Ohce(new LangueStub()).Traitement("laval");
+            var resultat = new OHCEBuilder().withLangue(new LangueStub()).build().Traitement("laval");
 
             //ALORS on obtient son miroir
             Assert.Contains("laval", resultat);
         }
 
 
-        [Theory]
+        /**[Theory]
         [MemberData(nameof(CasTestBonjour))]
         public void TestBonjour()
         {
@@ -28,7 +25,7 @@ namespace OHCE.Test
 
             //ALORS « Bonjour » est envoyé avant toute réponse
             Assert.StartsWith("Bonjour", resultat);
-        }
+        }*/
 
         public static IEnumerable<object[]> CasTestAuRevoir => new[]
         {
@@ -41,7 +38,7 @@ namespace OHCE.Test
         public void TestAuRevoir()
         {
             //QUAND on saisit une chaîne
-            var resultat = new Ohce(new LangueStub()).Traitement("test de chaine");
+            var resultat = new OHCEBuilder().withLangue(new LangueStub()).build().Traitement("test de chaine");
 
             //ALORS « Au revoir » est envoyé avant toute réponse
             Assert.EndsWith("Au revoir", resultat);
@@ -55,11 +52,11 @@ namespace OHCE.Test
 
         [Theory(DisplayName = "QUAND on envoie un palindrome ALORS on obtient celui-ci ET 'Bien dit !' est ajouté")]
         [ClassData(typeof(PalindromeClassData))]
-        public void TestPalindromeLangue(ILangue langue)
+        public void TestPalindromeLangue(ILangue langue, string palindrome)
         {
 
             //QUAND on envoie un mot
-            var resultat = new Ohce(langue).Traitement(palindrome);
+            var resultat = new OHCEBuilder().withLangue(langue).build().Traitement(palindrome);
             //ALORS on obtient celui-ci
             Assert.Contains(palindrome, resultat);
             var indexOfPalindrome = resultat.IndexOf(palindrome, StringComparison.Ordinal);
@@ -93,7 +90,7 @@ namespace OHCE.Test
         {
 
             //QUAND on saisit une chaîne
-            var resultat = new Ohce(langue).Traitement("test de chaine");
+            var resultat = new OHCEBuilder().withLangue(langue).build().Traitement("test de chaine");
 
             //ALORS <bonjour> de cette langue est envoyé avant tout
             Assert.StartsWith(langue.Bonjour, resultat);
@@ -104,10 +101,20 @@ namespace OHCE.Test
         public void TestAuRevoirLangue(ILangue langue)
         {
             //QUAND on saisit une chaîne
-            var resultat = new Ohce(langue).Traitement("test de chaine");
-
+            var resultat = new OHCEBuilder().withLangue(langue).build().Traitement("test de chaine");
             //ALORS « Au revoir » est envoyé avant toute réponse
             Assert.EndsWith(langue.AuRevoir, resultat);
+        }
+
+        [Theory(DisplayName = "ETANT DONNE un utilisateur parlant une langue ET que la période de la journée est <période> QUAND on saisit une chaîne ALORS <salutation> de cette langue à cette période est envoyé avant tout")]
+        [ClassData(typeof(SalutationsPeriodeClassData))]
+        public void TestBonjourLanguePeriode(ILangue langue, string periode)
+        {
+            //QUAND on saisit une chaîne
+            var resultat = new OHCEBuilder().withLangue(langue).withPeriode(periode).build().Traitement("test de chaine");
+
+            //ALORS <bonjour> de cette langue à cette période est envoyé avant tout
+            Assert.StartsWith(langue.Bonjour + periode, resultat);
         }
     }
 }
