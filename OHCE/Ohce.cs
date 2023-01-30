@@ -7,13 +7,13 @@ namespace OHCE
     public class Ohce
     {
         private readonly ILangue _langue;
-        public string _periode;
+        //public string _periode;
         //private readonly MomentDeLaJournée _momentDeLaJournée;
 
         public Ohce(ILangue langue, string periode)
         {
             _langue = langue;
-            _periode = periode;
+            //_periode = periode;
             //_momentDeLaJournée = momentDeLaJournée;
         }
 
@@ -46,7 +46,7 @@ namespace OHCE
 
         public string DireBonjour()
         {
-            return (_langue.Bonjour + " " + _periode).Trim();
+            return (_langue.Bonjour).Trim();
         }
 
         public string Miroir(string mot)
@@ -66,7 +66,7 @@ namespace OHCE
 
         public string DireAuRevoir()
         {
-            return (_langue.AuRevoir + " " + _periode).Trim();
+            return (_langue.AuRevoir).Trim();
         }
     }
 }
