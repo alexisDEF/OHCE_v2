@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OHCE.Langues;
+using System.Collections;
 
-namespace OHCE.Test.Utilities
+namespace OHCE.Test.utilities
 {
-    internal class PalindromeClassData
+    public class PalindromeClassData : IEnumerable<object[]>
     {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { new LangueFrançaise(), "laval", new LangueFrançaise().BienDit };
+            yield return new object[] { new LangueAnglaise(), "radar", new LangueAnglaise().BienDit };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

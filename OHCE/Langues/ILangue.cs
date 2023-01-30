@@ -2,8 +2,9 @@
 {
     public interface ILangue
     {
-        string Saluer(MomentDeLaJournée moment);
+        //string Saluer(MomentDeLaJournée moment);
         //string Acquittance { get; }
-        string BienDit { get; }
+        public string BienDit { get; }
+        public string Bonjour { get; }
     }
 }

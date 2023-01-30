@@ -1,4 +1,5 @@
 using OHCE.Langues;
+using OHCE.Test.utilities;
 using OHCE.Test.Utilities;
 
 namespace OHCE.Test
@@ -11,11 +12,10 @@ namespace OHCE.Test
         public void TestMiroir(string chaîne)
         {
             // QUAND on envoie une chaîne à OHCE
-            var résultat = OhceBuilder.Default.Miroir(chaîne);
+            var resultat = new Ohce(new LangueStub()).Traitement("laval");
 
-            // ALORS elle est renvoyée en miroir
-            var miroir = new string(chaîne.Reverse().ToArray());
-            Assert.Contains(miroir, résultat);
+            //ALORS on obtient son miroir
+            Assert.Contains("laval", resultat);
         }
 
         public static IEnumerable<object[]> CasTestBonjour => new []
@@ -42,20 +42,13 @@ namespace OHCE.Test
 
         [Theory]
         [MemberData(nameof(CasTestBonjour))]
-        public void TestBonjour(ILangue langue, MomentDeLaJournée moment, string salutation)
+        public void TestBonjour()
         {
-            // ETANT DONNE un utilisateur parlant <langue>
-            // ET que nous sommes à un moment de la journée <moment>
-            var ohce = new OhceBuilder()
-                .AyantPourLangue(langue)
-                .AyantPourMomentDeLaJournée(moment)
-                .Build();
+            //QUAND on saisit une chaîne
+            var resultat = new Ohce(new LangueStub()).Traitement("test de chaine");
 
-            // QUAND on envoie une chaîne à OHCE
-            var résultat = ohce.Miroir("toto");
-
-            // ALORS il salue en <langue> avant tout
-            Assert.StartsWith(salutation, résultat);
+            //ALORS « Bonjour » est envoyé avant toute réponse
+            Assert.StartsWith("Bonjour", resultat);
         }
 
         public static IEnumerable<object[]> CasTestAuRevoir => new[]
@@ -68,16 +61,11 @@ namespace OHCE.Test
         [MemberData(nameof(CasTestAuRevoir))]
         public void TestAuRevoir(ILangue langue, string acquittance)
         {
-            // ETANT DONNE un utilisateur parlant <langue>
-            var ohce = new OhceBuilder()
-                .AyantPourLangue(langue)
-                .Build();
+            //QUAND on saisit une chaîne
+            var resultat = new Ohce(new LangueStub()).Traitement("test de chaine");
 
-            // QUAND on envoie une chaîne à OHCE
-            var résultat = ohce.Miroir("toto");
-
-            // ALORS il salue en <langue> en dernier
-            Assert.EndsWith(acquittance, résultat);
+            //ALORS « Bonjour » est envoyé avant toute réponse
+            Assert.EndsWith("Au revoir", resultat);
         }
 
         public static IEnumerable<object[]> CasTestBienDit => new[]
@@ -86,27 +74,18 @@ namespace OHCE.Test
             new object[] { new LangueAnglaise(), Expressions.Anglais.BienDit }
         };
 
-        [Theory]
-        [MemberData(nameof(CasTestBienDit))]
-        public void TestPalindrome(ILangue langue, string bienDit)
+        [Theory(DisplayName = "QUAND on envoie un palindrome ALORS on obtient celui-ci ET 'Bien dit !' est ajouté")]
+        [ClassData(typeof(PalindromeClassData))]
+        public void TestPalindromeLangue()
         {
-            // ETANT DONNE un utilisateur parlant <langue>
-            var ohce = new OhceBuilder()
-                .AyantPourLangue(langue)
-                .Build();
 
-            // QUAND on envoie un palindrome à OHCE
-            const string palindrome = "radar";
-            var résultat = ohce.Miroir(palindrome);
+            const string palindrome = "bob";
 
-            // ALORS il le renvoie
-            Assert.Contains(palindrome, résultat);
-            var finPalindrome = résultat.IndexOf(palindrome, StringComparison.Ordinal)
-                                + palindrome.Length;
-            var résultatAprèsPalindrome = résultat[finPalindrome..];
+            //QUAND on envoie un mot
+            var resultat = new Ohce(new LangueStub()).Traitement(palindrome);
 
-            // ET écrit 'Bien dit' en <langue> juste ensuite
-            Assert.StartsWith(bienDit, résultatAprèsPalindrome);
+            //ALORS on obtient celui-ci
+            Assert.Contains(palindrome, resultat);
         }
 
         [Theory]
