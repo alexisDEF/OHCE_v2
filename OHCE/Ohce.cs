@@ -31,22 +31,18 @@ namespace OHCE
         {   
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.Append(_langue.Bonjour);
-            stringBuilder.Append(_periode);
+            stringBuilder.Append(this.DireBonjour());
 
-            var miroir = new string(mot.Reverse().ToArray());
-            stringBuilder.Append(miroir);
-            if (miroir == mot)
-            {
-                stringBuilder.Append(_langue.BienDit);
-            }
-            stringBuilder.Append(_langue.AuRevoir + _periode);
+            stringBuilder.Append(" " + this.Miroir(mot) + " ");
+
+            stringBuilder.Append(this.DireAuRevoir());
+
             return stringBuilder.ToString();
         }
 
         public string DireBonjour()
         {
-            return (_langue.Bonjour).Trim();
+            return (_langue.Bonjour + " " + _periode).Trim();
         }
 
         public string Miroir(string mot)
@@ -66,7 +62,7 @@ namespace OHCE
 
         public string DireAuRevoir()
         {
-            return (_langue.AuRevoir).Trim();
+            return (_langue.AuRevoir + " " + _periode).Trim();
         }
     }
 }

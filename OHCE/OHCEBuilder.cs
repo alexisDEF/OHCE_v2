@@ -27,9 +27,9 @@ namespace OHCE
             return this;
         }
 
-        public OHCE build()
+        public Ohce build()
         {
-            return new OHCE(this.langue, this.periode);
+            return new Ohce(this.langue, this.periode);
         }
     }
 }

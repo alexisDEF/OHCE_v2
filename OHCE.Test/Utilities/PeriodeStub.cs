@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OHCE.Langues;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,7 @@ namespace OHCE.Test.utilities
         public string soiree => periode.soiree;
 
         public string nuit => periode.nuit;
+
+        public string Saisie => langue.Saisie;
     }
 }

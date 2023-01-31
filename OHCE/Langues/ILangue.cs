@@ -7,5 +7,6 @@
         public string BienDit { get; }
         public string Bonjour { get; }
         public string AuRevoir { get; }
+        public string Saisie { get; }
     }
 }

@@ -114,7 +114,7 @@ namespace OHCE.Test
             var resultat = new OHCEBuilder().withLangue(langue).withPeriode(periode).build().Traitement("test de chaine");
 
             //ALORS <bonjour> de cette langue à cette période est envoyé avant tout
-            Assert.StartsWith(langue.Bonjour + periode, resultat);
+            Assert.StartsWith(langue.Bonjour + " : " + periode, resultat);
         }
 
         [Theory(DisplayName = "ETANT DONNE un utilisateur parlant une langue ET que la période de la journée est <période> QUAND on saisit une chaîne ALORS <au revoir> de cette langue à cette période est envoyé avant tout")]
@@ -125,7 +125,7 @@ namespace OHCE.Test
             var resultat = new OHCEBuilder().withLangue(langue).withPeriode(periode).build().Traitement("test de chaine");
 
             //ALORS <au revoir> de cette langue à cette période est envoyé avant tout
-            Assert.EndsWith(langue.AuRevoir + periode, resultat);
+            Assert.EndsWith(langue.AuRevoir + " : " + periode, resultat);
         }
     }
 }
