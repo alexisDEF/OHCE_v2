@@ -7,7 +7,7 @@ namespace OHCE
     public class Ohce
     {
         private readonly ILangue _langue;
-        public string _periode;
+        private readonly IPeriode _periode;
         //private readonly MomentDeLaJournée _momentDeLaJournée;
 
         public Ohce(ILangue langue, IPeriode periode)
